@@ -1,0 +1,56 @@
+intents:
+  - greet
+  - goodbye
+  - affirm
+  - deny
+  - thank_you  # Added thank_you intent
+  - add_item
+
+entities:
+  - location
+  - item_name
+  - quantity
+  - price
+
+slots:
+  item_name:
+    type: text
+  quantity:
+    type: text
+  price:
+    type: text
+
+
+responses:
+  utter_greet:
+    - text: "Hello! How can I assist you today?"
+
+  utter_goodbye:
+    - text: "Goodbye! Have a great day!"
+
+  utter_affirm:
+    - text: "Glad to hear that!"
+
+  utter_deny:
+    - text: "Alright, let me know if you need anything else."
+
+  utter_ask_weather:
+    - text: "Please provide a location to get the weather update."
+
+  utter_default:
+    - text: "I'm here to help. Could you please clarify?"
+
+  utter_thank_you: # Added the missing response
+    - text: "You're welcome! Let me know if you need anything else."
+  utter_ask_item_details:
+    - text: "Please provide the details of the item (name, quantity, and price)."
+  utter_item_added:
+    - text: "Item added successfully."
+
+actions:
+  - action_add_item  # Example custom action
+
+
+
+policies:
+  - name: RulePolicy

@@ -1,0 +1,44 @@
+nlu:
+  - intent: greet
+    examples: |
+      - Hello
+      - Hi
+      - Hey there
+      - Good morning
+      - Good evening
+
+  - intent: goodbye
+    examples: |
+      - Goodbye
+      - See you later
+      - Bye
+      - Have a nice day
+
+  - intent: affirm
+    examples: |
+      - Yes
+      - Yeah
+      - Absolutely
+      - Sure
+
+  - intent: deny
+    examples: |
+      - No
+      - Nope
+      - I don't think so
+
+  - intent: thank_you
+    examples: |
+      - Thanks
+      - Thank you
+      - I appreciate it
+      - Much appreciated
+
+  - intent: add_item
+    examples: |
+        - I have harvested 100 kg of wheat.
+        - I want to add 200 kg of tomatoes.
+        - I have harvested 10 kg of tomatoes.
+        - I harvested 5 kg of wheat.
+        - I picked 20 kg of corn.
+        - I have gathered 15 kg of rice.
