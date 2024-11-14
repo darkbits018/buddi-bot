@@ -1,0 +1,46 @@
+# data/nlu.yml
+version: "3.1"
+
+nlu:
+- intent: greet
+  examples: |
+    - hey
+    - hello
+    - hi
+    - greetings
+    - good morning
+    - good evening
+
+- intent: goodbye
+  examples: |
+    - bye
+    - goodbye
+    - see you
+    - see you later
+    - good night
+
+- intent: inform_harvest
+  examples: |
+    - i have a harvest of {quantity} {item_name}
+    - we harvested {quantity} {item_name}
+    - got {quantity} {item_name} from the field
+    - harvested {quantity} {item_name} today
+    - the harvest is {quantity} kg of {item_name}
+    - i have {quantity} kg of {item_name}
+    - collected {quantity} {item_name}
+
+- intent: inform_price
+  examples: |
+    - the price is {price} per unit
+    - it costs {price}
+    - selling at {price}
+    - {price} per kg
+    - {price} each
+    - price is {price}
+
+- intent: provide_farmer_id
+  examples: |
+    - my farmer id is {farmer_id}
+    - farmer id {farmer_id}
+    - id is {farmer_id}
+    - {farmer_id} is my id

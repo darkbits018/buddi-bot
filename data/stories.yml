@@ -1,0 +1,22 @@
+# data/stories.yml
+version: "3.1"
+
+stories:
+- story: happy path record harvest
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - intent: provide_farmer_id
+    entities:
+      - farmer_id: "123"
+  - intent: inform_harvest
+    entities:
+      - quantity: 10
+      - item_name: "tomatoes"
+  - action: utter_ask_price
+  - intent: inform_price
+    entities:
+      - price: "5.99"
+  - action: action_record_harvest
+  - intent: goodbye
+  - action: utter_goodbye

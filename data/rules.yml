@@ -1,0 +1,13 @@
+# data/rules.yml
+version: "3.1"
+
+rules:
+- rule: Say goodbye whenever the user says goodbye
+  steps:
+  - intent: goodbye
+  - action: utter_goodbye
+
+- rule: Say hello whenever the user says hello
+  steps:
+  - intent: greet
+  - action: utter_greet
