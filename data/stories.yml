@@ -1,22 +1,24 @@
-# data/stories.yml
 version: "3.1"
-
 stories:
-- story: happy path record harvest
-  steps:
-  - intent: greet
-  - action: utter_greet
-  - intent: provide_farmer_id
-    entities:
-      - farmer_id: "123"
-  - intent: inform_harvest
-    entities:
-      - quantity: 10
-      - item_name: "tomatoes"
-  - action: utter_ask_price
-  - intent: inform_price
-    entities:
-      - price: "5.99"
-  - action: action_record_harvest
-  - intent: goodbye
-  - action: utter_goodbye
+  - story: intro
+    steps:
+      - intent: greet
+      - action: utter_greet
+      - action: utter_ask_name
+      - intent: username
+      - action: utter_goodbye
+  - story: bye-bye
+    steps:
+      - intent: goodbye
+      - action: utter_goodbye
+
+  - story: add_items
+    steps:
+      - intent: tell_add_item
+      - action: utter_ask_item_name
+      - intent: item_name
+        entities:
+          - item_name: "potato"
+      - slot_was_set:
+          - item_name: "{item_name}"
+      - action: utter_item_name

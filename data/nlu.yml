@@ -1,46 +1,35 @@
-# data/nlu.yml
 version: "3.1"
-
 nlu:
-- intent: greet
-  examples: |
-    - hey
-    - hello
-    - hi
-    - greetings
-    - good morning
-    - good evening
+  - intent: greet
+    examples: |
+      - hi
+      - hello
+      - hey
+      - good morning
 
-- intent: goodbye
-  examples: |
-    - bye
-    - goodbye
-    - see you
-    - see you later
-    - good night
+  - intent: goodbye
+    examples: |
+      - bye
+      - goodbye
+      - see you
+  - intent: username
+    examples: |
+      - My name is [Abhay]{"entity":"name", "value":"Abhay"}
+      - [Abhay]{"entity":"name", "value":"Abhay"} here
+      - I am [Abhay]{"entity":"name", "value":"Abhay"}
+      - My name is [Rahul]{"entity":"name", "value":"Rahul"}
+      - [Mio]{"entity":"name", "value":"Mio"} here
+      - I am [Kaze]{"entity":"name", "value":"Kaze"}
 
-- intent: inform_harvest
-  examples: |
-    - i have a harvest of {quantity} {item_name}
-    - we harvested {quantity} {item_name}
-    - got {quantity} {item_name} from the field
-    - harvested {quantity} {item_name} today
-    - the harvest is {quantity} kg of {item_name}
-    - i have {quantity} kg of {item_name}
-    - collected {quantity} {item_name}
+  - intent: tell_add_item
+    examples: |
+      - I want to add Items
+      - I want to add products
 
-- intent: inform_price
-  examples: |
-    - the price is {price} per unit
-    - it costs {price}
-    - selling at {price}
-    - {price} per kg
-    - {price} each
-    - price is {price}
-
-- intent: provide_farmer_id
-  examples: |
-    - my farmer id is {farmer_id}
-    - farmer id {farmer_id}
-    - id is {farmer_id}
-    - {farmer_id} is my id
+  - intent: item_name
+    examples: |
+      - [potato]{"entity":"item_name", "value":"potato"} 
+      - [tomato]{"entity":"item_name", "value":"tomato"} 
+      - [carrot]{"entity":"item_name", "value":"carrot"} 
+      - [corn]{"entity":"item_name", "value":"corn"} 
+      - [cabbage]{"entity":"item_name", "value":"cabbage"}

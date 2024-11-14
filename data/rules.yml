@@ -1,13 +1,14 @@
 # data/rules.yml
 version: "3.1"
-
-rules:
-- rule: Say goodbye whenever the user says goodbye
-  steps:
-  - intent: goodbye
-  - action: utter_goodbye
-
-- rule: Say hello whenever the user says hello
-  steps:
-  - intent: greet
-  - action: utter_greet
+#
+#rules:
+#  - rule: add item
+#    steps:
+#      - intent: tell_add_item
+#      - action: utter_ask_item_name
+#      - intent: item_name
+#        entities:
+#          - item_name: "potato"
+#      - slot_was_set:
+#          - item_name: "potato"
+#      - action: utter_item_name

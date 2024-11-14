@@ -1,27 +1,15 @@
-# config.yml
-language: en
-
+language: "en"
 pipeline:
+#- name: "LanguageModelIntentClassifier"    # This uses a pretrained language model for intent classification
   - name: WhitespaceTokenizer
   - name: RegexFeaturizer
-  - name: LexicalSyntacticFeaturizer
   - name: CountVectorsFeaturizer
-  - name: CountVectorsFeaturizer
-    analyzer: char_wb
-    min_ngram: 1
-    max_ngram: 4
-  - name: custom_components.llm_classifier.LLMIntentClassifier
-    confidence_threshold: 0.7
-  - name: EntitySynonymMapper
-  - name: ResponseSelector
+  - name: DIETClassifier
     epochs: 100
+#- name: "EntityExtractor"    # Handles entity extraction
+#- name: "RegexEntityExtractor"    # You can use this for extracting entities based on regex patterns
 
 policies:
-  - name: MemoizationPolicy
-  - name: TEDPolicy
-    max_history: 5
-    epochs: 100
-  - name: RulePolicy
-    core_fallback_threshold: 0.3
-    core_fallback_action_name: "action_llm_fallback"
-    enable_fallback_prediction: true
+- name: "RulePolicy"
+- name: "MemoizationPolicy"
+assistant_id: 20241114-162419-blue-retreat

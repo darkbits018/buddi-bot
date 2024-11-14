@@ -1,53 +1,41 @@
-# domain.yml
 version: "3.1"
-
 intents:
   - greet
   - goodbye
-  - inform_harvest
-  - inform_price
-  - provide_farmer_id
+  - tell_add_item
+  - username:
+      use_entities:
+        - name
+  - item_name:
+      use_entities:
+        - item_name
+
+
 
 entities:
-  - quantity
+  - name
   - item_name
-  - price
-  - farmer_id
 
 slots:
-  quantity:
-    type: float
-    mappings:
-    - type: from_entity
-      entity: quantity
   item_name:
     type: text
     mappings:
-    - type: from_entity
-      entity: item_name
-  price:
-    type: float
-    mappings:
-    - type: from_entity
-      entity: price
-  farmer_id:
-    type: int
-    mappings:
-    - type: from_entity
-      entity: farmer_id
+      - type: from_entity
+        entity: item_name
+    influence_conversation: false
 
 responses:
   utter_greet:
-    - text: "Hello! I can help you record your harvest. Please provide your farmer ID first."
-  
+    - text: "Hello! How can I help you today?"
   utter_goodbye:
     - text: "Goodbye! Have a great day!"
-  
-  utter_ask_price:
-    - text: "What is the price per unit for {item_name}?"
-  
-  utter_harvest_recorded:
-    - text: "I've recorded your harvest: {quantity} {item_name} at ${price} per unit."
-  
-  utter_ask_farmer_id:
-    - text: "Please provide your farmer ID."
+  utter_ask_name:
+    - text: "What is your name ?"
+  utter_ask_item_name:
+    - text: "Sure,  What Item do you want to add ?"
+  utter_item_name:
+    - text: "{item_name} added"
+  utter_thank:
+    - text: "Thank you"
+
+
