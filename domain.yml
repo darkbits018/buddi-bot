@@ -9,12 +9,16 @@ intents:
   - item_name:
       use_entities:
         - item_name
+  - item_quantity:
+      use_entities:
+        - item_quantity
 
 
 
 entities:
   - name
   - item_name
+  - item_quantity
 
 slots:
   item_name:
@@ -22,6 +26,12 @@ slots:
     mappings:
       - type: from_entity
         entity: item_name
+    influence_conversation: false
+  item_quantity:
+    type: text
+    mappings:
+      - type: from_entity
+        entity: item_quantity
     influence_conversation: false
 
 responses:
@@ -33,8 +43,10 @@ responses:
     - text: "What is your name ?"
   utter_ask_item_name:
     - text: "Sure,  What Item do you want to add ?"
-  utter_item_name:
-    - text: "{item_name} added"
+  utter_ask_item_quantity:
+    - text: "Ok, Provide Quantity ?"
+  utter_item_detail:
+    - text: "{item_name} {item_quantity} Kg added"
   utter_thank:
     - text: "Thank you"
 

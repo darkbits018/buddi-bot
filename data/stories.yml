@@ -21,4 +21,10 @@ stories:
           - item_name: "potato"
       - slot_was_set:
           - item_name: "{item_name}"
-      - action: utter_item_name
+      - action: utter_ask_item_quantity
+      - intent: item_quantity
+        entities:
+          - item_quantity: "10"
+      - slot_was_set:
+          - item_quantity: "{item_quantity}"
+      - action: utter_item_detail

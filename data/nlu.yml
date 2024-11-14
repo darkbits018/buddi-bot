@@ -33,3 +33,10 @@ nlu:
       - [carrot]{"entity":"item_name", "value":"carrot"} 
       - [corn]{"entity":"item_name", "value":"corn"} 
       - [cabbage]{"entity":"item_name", "value":"cabbage"}
+  - intent: item_quantity
+    examples: |
+      - [10]{"entity":"item_quantity", "value":"10"} Kg
+      - [50]{"entity":"item_quantity", "value":"50"} KG
+      - [100]{"entity":"item_quantity", "value":"100"} kg
+      - [33]{"entity":"item_quantity", "value":"33"} 
+      - [7]{"entity":"item_quantity", "value":"7"}
