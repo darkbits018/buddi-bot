@@ -12,4 +12,5 @@ pipeline:
 policies:
 - name: "RulePolicy"
 - name: "MemoizationPolicy"
+#- name: "FormPolicy"
 assistant_id: 20241114-162419-blue-retreat

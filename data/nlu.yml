@@ -40,3 +40,10 @@ nlu:
       - [100]{"entity":"item_quantity", "value":"100"} kg
       - [33]{"entity":"item_quantity", "value":"33"} 
       - [7]{"entity":"item_quantity", "value":"7"}
+  - intent: item_price
+    examples: |
+      - [i]{"entity":"item_price", "value":"9.99"} USD
+      - [50.40]{"entity":"item_price", "value":"50.40"} Dollar
+      - [99.9]{"entity":"item_price", "value":"99.9"} INR
+      - [8.9]{"entity":"item_price", "value":"8.9"} Rs
+      - [2.50]{"entity":"item_price", "value":"2.50"} Rupees

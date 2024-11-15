@@ -12,6 +12,9 @@ intents:
   - item_quantity:
       use_entities:
         - item_quantity
+  - item_price:
+      use_entities:
+        - item_price
 
 
 
@@ -19,6 +22,7 @@ entities:
   - name
   - item_name
   - item_quantity
+  - item_price
 
 slots:
   item_name:
@@ -33,6 +37,12 @@ slots:
       - type: from_entity
         entity: item_quantity
     influence_conversation: false
+  item_price:
+    type: text
+    mappings:
+      - type: from_entity
+        entity: item_price
+    influence_conversation: false
 
 responses:
   utter_greet:
@@ -45,9 +55,12 @@ responses:
     - text: "Sure,  What Item do you want to add ?"
   utter_ask_item_quantity:
     - text: "Ok, Provide Quantity ?"
+  utter_ask_item_price:
+    - text: "Got it, What's the price per unit ?"
   utter_item_detail:
-    - text: "{item_name} {item_quantity} Kg added"
+    - text: "I'll store these details: Item: {item_name}, Quantity: {item_quantity}, Price: {item_price}"
   utter_thank:
     - text: "Thank you"
 
-
+actions:
+  - action_store_item_details

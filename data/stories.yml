@@ -27,4 +27,11 @@ stories:
           - item_quantity: "10"
       - slot_was_set:
           - item_quantity: "{item_quantity}"
+      - action: utter_ask_item_price
+      - intent: item_price
+        entities:
+          - item_price: "9.99"
+      - slot_was_set:
+          - item_price: "{item_price}"
       - action: utter_item_detail
+      - action: action_store_item_details
