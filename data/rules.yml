@@ -12,3 +12,19 @@ version: "3.1"
 #      - slot_was_set:
 #          - item_name: "potato"
 #      - action: utter_item_name
+
+rules:
+- rule: Allow show items anytime
+  steps:
+  - intent: show_items
+  - action: action_show_items
+
+- rule: Allow add items anytime
+  steps:
+  - intent: tell_add_item
+  - action: utter_ask_item_name
+
+- rule: Allow show item details anytime
+  steps:
+  - intent: show_item_details
+  - action: action_show_item_details

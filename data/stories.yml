@@ -35,3 +35,17 @@ stories:
           - item_price: "{item_price}"
       - action: utter_item_detail
       - action: action_store_item_details
+
+  - story: show_items
+    steps:
+      - intent: show_items
+      - action: action_show_items
+
+  - story: show_item_details
+    steps:
+      - intent: show_item_details
+        entities:
+          - item_id: "1"
+      - slot_was_set:
+          - item_id: "1"
+      - action: action_show_item_details

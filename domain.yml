@@ -3,6 +3,7 @@ intents:
   - greet
   - goodbye
   - tell_add_item
+  - show_item_details
   - username:
       use_entities:
         - name
@@ -18,11 +19,14 @@ intents:
 
 
 
+
 entities:
   - name
   - item_name
   - item_quantity
   - item_price
+  - show_items
+  - item_id
 
 slots:
   item_name:
@@ -43,6 +47,11 @@ slots:
       - type: from_entity
         entity: item_price
     influence_conversation: false
+  item_id:
+    type: text
+    mappings:
+      - type: from_entity
+        entity: item_id
 
 responses:
   utter_greet:
@@ -61,6 +70,12 @@ responses:
     - text: "I'll store these details: Item: {item_name}, Quantity: {item_quantity}, Price: {item_price}"
   utter_thank:
     - text: "Thank you"
+  utter_items_shown:
+    - text: "These are all your items."
+  utter_ask_item_id:
+    - text: "Please provide the ID of the item you want to view."
 
 actions:
   - action_store_item_details
+  - action_show_items
+  - action_show_item_details

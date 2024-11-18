@@ -33,17 +33,60 @@ nlu:
       - [carrot]{"entity":"item_name", "value":"carrot"} 
       - [corn]{"entity":"item_name", "value":"corn"} 
       - [cabbage]{"entity":"item_name", "value":"cabbage"}
+      - [banana]{"entity":"item_name", "value":"banana"}
+      - [onion]{"entity":"item_name", "value":"onion"}
+      - [beetroot]{"entity":"item_name", "value":"beetroot"}
+      - I want to add [banana]{"entity":"item_name", "value":"banana"}
+      - Please add [onion]{"entity":"item_name", "value":"onion"} to the list
+      - Add [cucumber]{"entity":"item_name", "value":"cucumber"}
   - intent: item_quantity
     examples: |
+      - [33]{"entity":"item_quantity", "value":"33"} 
       - [10]{"entity":"item_quantity", "value":"10"} Kg
       - [50]{"entity":"item_quantity", "value":"50"} KG
-      - [100]{"entity":"item_quantity", "value":"100"} kg
-      - [33]{"entity":"item_quantity", "value":"33"} 
-      - [7]{"entity":"item_quantity", "value":"7"}
+      - Quantity is [100]{"entity":"item_quantity", "value":"100"} 
+      - Make it [7]{"entity":"item_quantity", "value":"7"} units
   - intent: item_price
     examples: |
-      - [i]{"entity":"item_price", "value":"9.99"} USD
+      - [9.99]{"entity":"item_price", "value":"9.99"} USD
       - [50.40]{"entity":"item_price", "value":"50.40"} Dollar
       - [99.9]{"entity":"item_price", "value":"99.9"} INR
       - [8.9]{"entity":"item_price", "value":"8.9"} Rs
       - [2.50]{"entity":"item_price", "value":"2.50"} Rupees
+
+  - intent: show_items
+    examples: |
+      - show my items
+      - display my items
+      - what items do i have
+      - list my items
+      - show all my items
+      - view my inventory
+      - check my items
+      - what's in my inventory
+  - intent: show_item_details
+    examples: |
+      - show item [1](item_id)
+      - show details of item [2](item_id)
+      - what are the details of item [3](item_id)
+      - tell me about item [4](item_id)
+      - view item [5](item_id)
+      - get details of item number [6](item_id)
+      - show me item [7](item_id)
+      - display item [8](item_id)
+      - what is item [9](item_id)
+      
+      
+
+  - lookup: item_name
+    examples: |
+      - potato
+      - tomato
+      - carrot
+      - banana
+      - onion
+      - beetroot
+
+  - regex: item_quantity
+    examples: |
+      - \b\d+\s?(Kg|KG|units|pcs)?\b
