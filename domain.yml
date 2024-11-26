@@ -16,6 +16,20 @@ intents:
   - item_price:
       use_entities:
         - item_price
+  - record_sale
+  - inform_buyer:
+      use_entities:
+        - buyer_id
+  - inform_item:
+      use_entities:
+        - item_id
+  - get_sale_details:
+      use_entities:
+        - sale_id
+  - get_farmer_sales:
+      use_entities:
+        - farmer_id
+
 
 
 
@@ -27,6 +41,10 @@ entities:
   - item_price
   - show_items
   - item_id
+  - buyer_id
+  - sale_id
+  - farmer_id
+
 
 slots:
   item_name:
@@ -52,6 +70,34 @@ slots:
     mappings:
       - type: from_entity
         entity: item_id
+  buyer_id:
+    type: text
+    mappings:
+      - type: from_entity
+        entity: buyer_id
+    influence_conversation: false
+  sale_id:
+    type: text
+    influence_conversation: false
+  farmer_id:
+    type: text
+    influence_conversation: false
+  last_retrieved_sale_id:
+    type: text
+    influence_conversation: false
+  last_sale_total:
+    type: float
+    influence_conversation: false
+  last_retrieved_farmer_id:
+    type: text
+    influence_conversation: false
+  farmer_total_sales:
+    type: float
+    influence_conversation: false
+
+
+
+
 
 responses:
   utter_greet:
@@ -74,8 +120,20 @@ responses:
     - text: "These are all your items."
   utter_ask_item_id:
     - text: "Please provide the ID of the item you want to view."
+  utter_ask_item_id_sell:
+    - text: "Please provide the ID of the item you want to sell."
+  utter_ask_buyer_id:
+    - text: "What is the buyer ID? (optional)"
+  utter_sale_confirmation:
+    - text: "I'll record a sale for item {item_id}, quantity {item_quantity} at {item_price} per unit."
+  utter_anything_else:
+    - text: "Is there anything else I can help you with?"
 
 actions:
   - action_store_item_details
   - action_show_items
   - action_show_item_details
+  - action_record_sale
+  - action_get_sale_details
+  - action_get_farmer_sales
+  - utter_anything_else

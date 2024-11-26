@@ -75,8 +75,48 @@ nlu:
       - show me item [7](item_id)
       - display item [8](item_id)
       - what is item [9](item_id)
-      
-      
+
+  - intent: record_sale
+    examples: |
+      - I want to record a sale
+      - register a sale
+      - sell an item
+      - make a sale
+      - record item sale
+      - log a sale
+      - new sale
+      - process a sale
+
+  - intent: inform_buyer
+    examples: |
+      - buyer [1001]{"entity":"buyer_id", "value":"1001"}
+      - customer [1002]{"entity":"buyer_id", "value":"1002"}
+      - buyer id is [1003]{"entity":"buyer_id", "value":"1003"}
+      - customer number [1004]{"entity":"buyer_id", "value":"1004"}
+      - for buyer [1005]{"entity":"buyer_id", "value":"1005"}
+  - intent: inform_item
+    examples: |
+      - item [123](item_id)
+      - product [456](item_id)
+      - item id is [789](item_id)
+      - it's item [234](item_id)
+      - product number [567](item_id)
+
+  - intent: get_sale_details
+    examples: |
+      - What are the details of sale [123](sale_id)?
+      - Show me sale [456](sale_id)
+      - I want to know about sale number [789](sale_id)
+      - Can you retrieve sale [234](sale_id) information?
+      - Give me details for sale [57](sale_id)
+
+  - intent: get_farmer_sales
+    examples: |
+      - show sales for farmer [2](farmer_id)
+      - display sales of farmer [5](farmer_id)
+      - get sales for farmer [10](farmer_id)
+      - sales of farmer [3](farmer_id)
+      - show me sale for farmer [2](farmer_id)
 
   - lookup: item_name
     examples: |
@@ -90,3 +130,8 @@ nlu:
   - regex: item_quantity
     examples: |
       - \b\d+\s?(Kg|KG|units|pcs)?\b
+regex_features:
+    - name: "sale_id_regex"
+      pattern:
+        - "sale\\s+\\d+"
+        - "^\\d+$"

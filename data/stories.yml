@@ -49,3 +49,51 @@ stories:
       - slot_was_set:
           - item_id: "1"
       - action: action_show_item_details
+
+  - story: record sale flow
+    steps:
+        - intent: record_sale
+        - action: utter_ask_item_id_sell
+        - intent: inform_item
+          entities:
+            - item_id: "123"
+        - action: utter_ask_buyer_id
+        - intent: inform_buyer
+          entities:
+            - buyer_id: "1001"
+        - action: utter_ask_item_quantity
+        - intent: item_quantity
+          entities:
+            - item_quantity: "5"
+        - action: utter_ask_item_price
+        - intent: item_price
+          entities:
+            - item_price: "99.99"
+        - action: utter_sale_confirmation
+        - action: action_record_sale
+
+# get sales
+
+  - story: get specific sale details
+    steps:
+    - intent: get_sale_details
+    - action: action_get_sale_details
+
+  - story: get farmer sales
+    steps:
+    - intent: get_farmer_sales
+    - action: action_get_farmer_sales
+
+  - story: follow up on sale details
+    steps:
+    - intent: get_sale_details
+    - action: action_get_sale_details
+    - intent: confirm
+    - action: utter_anything_else
+
+  - story: follow up on farmer sales
+    steps:
+    - intent: get_farmer_sales
+    - action: action_get_farmer_sales
+    - intent: confirm
+    - action: utter_anything_else

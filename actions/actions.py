@@ -144,7 +144,6 @@ class ActionShowItemDetails(Action):
         return []
 
 
-
 class ActionRecordSale(Action):
     def name(self) -> Text:
         return "action_record_sale"
@@ -153,32 +152,167 @@ class ActionRecordSale(Action):
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
 
-        # Extract slot values
-        item_id = tracker.get_slot("item_id")
-        buyer_id = tracker.get_slot("buyer_id")
-        quantity_sold = tracker.get_slot("quantity_sold")
-        sale_price = tracker.get_slot("sale_price")
+        # Get slot values (reusing existing slots)
+        item_id = tracker.get_slot('item_id')
+        buyer_id = tracker.get_slot('buyer_id')
+        quantity = tracker.get_slot('item_quantity')
+        price = tracker.get_slot('item_price')
 
-        # Prepare payload
-        payload = {
+        # Validate required slots
+        if not all([item_id, quantity, price]):
+            dispatcher.utter_message(text="Missing required sale information. Please provide all details.")
+            return []
+
+        # Clean price value (remove currency symbols if present)
+        price = price.replace("USD", "").replace("Dollar", "").replace("INR", "").replace("Rs", "").replace("Rupees",
+                                                                                                            "").strip()
+
+        # Prepare data for API
+        sale_data = {
             "item_id": int(item_id),
             "buyer_id": int(buyer_id) if buyer_id else None,
-            "quantity_sold": int(quantity_sold),
-            "sale_price": float(sale_price)
+            "quantity_sold": int(quantity),
+            "sale_price": float(price)
         }
 
-        # API call
         try:
-            response = requests.post("http://your-server-url/sales", json=payload)
+            # Make API call
+            response = requests.post(
+                'https://buddiv2-api.onrender.com/sales',
+                json=sale_data,
+                headers={'Content-Type': 'application/json'}
+            )
+
             if response.status_code == 201:
-                sale_id = response.json().get("sale_id")
+                sale_id = response.json().get('sale_id')
                 dispatcher.utter_message(text=f"Sale recorded successfully! Sale ID: {sale_id}")
-                return [SlotSet("sale_id", sale_id)]
             else:
-                dispatcher.utter_message(text=f"Failed to record sale: {response.json().get('message', 'Unknown error')}")
-                return []
+                dispatcher.utter_message(text="Failed to record sale. Please try again.")
+
         except Exception as e:
-            dispatcher.utter_message(text=f"Error: {str(e)}")
+            dispatcher.utter_message(text="Error connecting to sales system. Please try again later.")
+
+        # Clear slots after sale
+        return [SlotSet("item_id", None),
+                SlotSet("buyer_id", None),
+                SlotSet("item_quantity", None),
+                SlotSet("item_price", None)]
+
+
+class ActionGetSaleDetails(Action):
+    def name(self) -> Text:
+        return "action_get_sale_details"
+
+    def run(self, dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+
+        # Check multiple possible entity names
+        sale_id = (
+                next(tracker.get_latest_entity_values("sale_id"), None) or
+                next(tracker.get_latest_entity_values("item_id"), None) or
+                tracker.get_slot("sale_id")
+        )
+
+        if not sale_id:
+            dispatcher.utter_message("Sorry, I couldn't find a sale ID to retrieve details.")
+            return []
+
+        try:
+            # Replace with your actual API endpoint base URL
+            url = f"https://buddiv2-api.onrender.com/sales/{sale_id}"
+            response = requests.get(url)
+
+            if response.status_code == 404:
+                dispatcher.utter_message(f"No sale found with ID {sale_id}.")
+                return []
+
+            sale_data = response.json()
+
+            # Enhanced formatting
+            message = f"""📦 Sale Details (ID: {sale_data['sale_id']})
+----------------------------------------
+🛍️ Item ID: {sale_data['item_id']}
+👤 Buyer ID: {sale_data['buyer_id']}
+📊 Quantity: {sale_data['quantity_sold']}
+💰 Unit Price: ${sale_data['sale_price']}
+💵 Total Sale: ${sale_data['total_sale_amount']}
+"""
+
+            dispatcher.utter_message(message)
+
+            return [
+                SlotSet("last_retrieved_sale_id", sale_id),
+                SlotSet("last_sale_total", sale_data['total_sale_amount'])
+            ]
+
+        except requests.RequestException:
+            dispatcher.utter_message("Sorry, there was an error retrieving the sale details.")
             return []
 
 
+class ActionGetFarmerSales(Action):
+    def name(self) -> Text:
+        return "action_get_farmer_sales"
+
+    def run(self, dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+
+        # Extract farmer ID using multiple methods
+        import re
+
+        # Try to extract farmer ID directly from the message text
+        message_text = tracker.latest_message['text'].lower()
+        farmer_id_match = re.search(r'farmer\s+(\d+)', message_text)
+
+        if farmer_id_match:
+            farmer_id = farmer_id_match.group(1)
+        else:
+            # Fallback to entities
+            farmer_id = (
+                    next(tracker.get_latest_entity_values("farmer_id"), None) or
+                    next(tracker.get_latest_entity_values("item_id"), None) or
+                    tracker.get_slot("farmer_id")
+            )
+
+        if not farmer_id:
+            dispatcher.utter_message("Sorry, I couldn't find a farmer ID to retrieve sales.")
+            return []
+
+        try:
+            # Ensure farmer_id is a string
+            farmer_id = str(farmer_id)
+
+            # API call
+            url = f"https://buddiv2-api.onrender.com/sales/farmer/{farmer_id}"
+            response = requests.get(url)
+
+            if response.status_code == 404:
+                dispatcher.utter_message(f"No sales found for farmer with ID {farmer_id}.")
+                return []
+
+            sales_data = response.json()
+
+            # Format the message
+            message = f"Sales for Farmer {farmer_id}:\n"
+            total_sales = 0
+            for sale in sales_data:
+                message += f"\n- Sale ID: {sale['sale_id']}"
+                message += f"\n  Item ID: {sale['item_id']}"
+                message += f"\n  Quantity: {sale['quantity_sold']}"
+                message += f"\n  Total Amount: ${sale['total_sale_amount']}\n"
+                total_sales += sale['total_sale_amount']
+
+            message += f"\nTotal Sales: ${total_sales}"
+
+            dispatcher.utter_message(message)
+
+            return [
+                SlotSet("last_retrieved_farmer_id", farmer_id),
+                SlotSet("farmer_total_sales", total_sales)
+            ]
+
+        except Exception as e:
+            dispatcher.utter_message(f"Sorry, there was an error retrieving farmer sales: {str(e)}")
+            return []
