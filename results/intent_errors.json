@@ -1,0 +1,10 @@
+[
+  {
+    "text": "item 123",
+    "intent": "inform_item",
+    "intent_prediction": {
+      "name": "show_item_details",
+      "confidence": 0.5915346145629883
+    }
+  }
+]

@@ -1,6 +1,7 @@
 # actions.py
+import re
 from typing import Any, Text, Dict, List
-from rasa_sdk import Action, Tracker
+from rasa_sdk import Action, Tracker, logger
 from rasa_sdk.events import SlotSet
 from rasa_sdk.executor import CollectingDispatcher
 import requests
@@ -155,8 +156,8 @@ class ActionRecordSale(Action):
         # Get slot values (reusing existing slots)
         item_id = tracker.get_slot('item_id')
         buyer_id = tracker.get_slot('buyer_id')
-        quantity = tracker.get_slot('item_quantity')
-        price = tracker.get_slot('item_price')
+        quantity = int(float('item_quantity'))  # Handles cases like "98.0" or "98"
+        price = float('item_price')  # Ensures a numeric price
 
         # Validate required slots
         if not all([item_id, quantity, price]):
@@ -251,68 +252,139 @@ class ActionGetSaleDetails(Action):
             return []
 
 
+# class ActionGetFarmerSales(Action):
+#     def name(self) -> Text:
+#         return "action_get_farmer_sales"
+#
+#     def run(self, dispatcher: CollectingDispatcher,
+#             tracker: Tracker,
+#             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+#
+#         # Extract farmer ID using multiple methods
+#         import re
+#
+#         # Try to extract farmer ID directly from the message text
+#         message_text = tracker.latest_message['text'].lower()
+#         farmer_id_match = re.search(r'farmer\s+(\d+)', message_text)
+#
+#         if farmer_id_match:
+#             farmer_id = farmer_id_match.group(1)
+#         else:
+#             # Fallback to entities
+#             farmer_id = (
+#                     next(tracker.get_latest_entity_values("farmer_id"), None) or
+#                     next(tracker.get_latest_entity_values("item_id"), None) or
+#                     tracker.get_slot("farmer_id")
+#             )
+#
+#         if not farmer_id:
+#             dispatcher.utter_message("Sorry, I couldn't find a farmer ID to retrieve sales.")
+#             return []
+#
+#         try:
+#             # Ensure farmer_id is a string
+#             farmer_id = str(farmer_id)
+#
+#             # API call
+#             url = f"https://buddiv2-api.onrender.com/sales/farmer/{farmer_id}"
+#             response = requests.get(url)
+#
+#             if response.status_code == 404:
+#                 dispatcher.utter_message(f"No sales found for farmer with ID {farmer_id}.")
+#                 return []
+#
+#             sales_data = response.json()
+#
+#             # Format the message
+#             message = f"Sales for Farmer {farmer_id}:\n"
+#             total_sales = 0
+#             for sale in sales_data:
+#                 message += f"\n- Sale ID: {sale['sale_id']}"
+#                 message += f"\n  Item ID: {sale['item_id']}"
+#                 message += f"\n  Quantity: {sale['quantity_sold']}"
+#                 message += f"\n  Total Amount: ${sale['total_sale_amount']}\n"
+#                 total_sales += float(sale['total_sale_amount'])
+#
+#
+#             message += f"\nTotal Sales: ${total_sales}"
+#
+#             dispatcher.utter_message(message)
+#
+#             return [
+#                 SlotSet("last_retrieved_farmer_id", farmer_id),
+#                 SlotSet("farmer_total_sales", total_sales)
+#             ]
+#
+#         except Exception as e:
+#             dispatcher.utter_message(f"Sorry, there was an error retrieving farmer sales: {str(e)}")
+#             return []
+
 class ActionGetFarmerSales(Action):
     def name(self) -> Text:
         return "action_get_farmer_sales"
 
-    def run(self, dispatcher: CollectingDispatcher,
-            tracker: Tracker,
-            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-
-        # Extract farmer ID using multiple methods
-        import re
-
-        # Try to extract farmer ID directly from the message text
+    def run(self, dispatcher: CollectingDispatcher, tracker: Tracker, domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+        # Extract Farmer ID
         message_text = tracker.latest_message['text'].lower()
-        farmer_id_match = re.search(r'farmer\s+(\d+)', message_text)
-
-        if farmer_id_match:
-            farmer_id = farmer_id_match.group(1)
+        farmer_id = re.search(r'farmer\s+(\d+)', message_text)
+        if farmer_id:
+            farmer_id = farmer_id.group(1)
         else:
-            # Fallback to entities
-            farmer_id = (
-                    next(tracker.get_latest_entity_values("farmer_id"), None) or
-                    next(tracker.get_latest_entity_values("item_id"), None) or
-                    tracker.get_slot("farmer_id")
-            )
+            farmer_id = next(tracker.get_latest_entity_values("farmer_id"), None) or tracker.get_slot("farmer_id")
 
         if not farmer_id:
             dispatcher.utter_message("Sorry, I couldn't find a farmer ID to retrieve sales.")
             return []
 
+        logger.debug(f"Extracted Farmer ID: {farmer_id}")
+
         try:
-            # Ensure farmer_id is a string
-            farmer_id = str(farmer_id)
-
-            # API call
+            # Fetch Sales Data
             url = f"https://buddiv2-api.onrender.com/sales/farmer/{farmer_id}"
-            response = requests.get(url)
+            response = requests.get(url, timeout=10)
 
-            if response.status_code == 404:
+            if response.status_code == 200:
+                sales_data = response.json()
+
+                if not isinstance(sales_data, list):
+                    dispatcher.utter_message("Unexpected response format from the API.")
+                    return []
+
+                # Process Sales Data
+                total_sales = 0
+                message = f"Sales for Farmer {farmer_id}:\n"
+
+                for sale in sales_data:
+                    try:
+                        total_sales += float(sale.get('total_sale_amount', 0))
+                        message += (
+                            f"\n- Sale ID: {sale.get('sale_id', 'unknown')}"
+                            f"\n  Item ID: {sale.get('item_id', 'unknown')}"
+                            f"\n  Quantity: {sale.get('quantity_sold', 'unknown')}"
+                            f"\n  Total Amount: ${sale.get('total_sale_amount', 0):,.2f}\n"
+                        )
+                    except ValueError:
+                        message += f"\n  Skipping sale due to invalid data: {sale}"
+
+                message += f"\nTotal Sales: ${total_sales:,.2f}"
+                dispatcher.utter_message(message)
+
+                # Set Slots
+                return [
+                    SlotSet("last_retrieved_farmer_id", farmer_id),
+                    SlotSet("farmer_total_sales", total_sales),
+                ]
+
+            elif response.status_code == 404:
                 dispatcher.utter_message(f"No sales found for farmer with ID {farmer_id}.")
-                return []
+            else:
+                dispatcher.utter_message(f"Error fetching sales data. API returned status {response.status_code}.")
 
-            sales_data = response.json()
-
-            # Format the message
-            message = f"Sales for Farmer {farmer_id}:\n"
-            total_sales = 0
-            for sale in sales_data:
-                message += f"\n- Sale ID: {sale['sale_id']}"
-                message += f"\n  Item ID: {sale['item_id']}"
-                message += f"\n  Quantity: {sale['quantity_sold']}"
-                message += f"\n  Total Amount: ${sale['total_sale_amount']}\n"
-                total_sales += sale['total_sale_amount']
-
-            message += f"\nTotal Sales: ${total_sales}"
-
-            dispatcher.utter_message(message)
-
-            return [
-                SlotSet("last_retrieved_farmer_id", farmer_id),
-                SlotSet("farmer_total_sales", total_sales)
-            ]
-
+        except requests.exceptions.Timeout:
+            dispatcher.utter_message("The request to the sales API timed out. Please try again later.")
+        except requests.exceptions.RequestException as e:
+            dispatcher.utter_message(f"An error occurred while connecting to the sales API: {str(e)}")
         except Exception as e:
             dispatcher.utter_message(f"Sorry, there was an error retrieving farmer sales: {str(e)}")
-            return []
+
+        return []
