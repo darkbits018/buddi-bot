@@ -686,7 +686,7 @@ class ActionGetItemSalesForMonth(Action):
 #
 #         try:
 #             # Call the invoice download API (replace with your actual API endpoint)
-#             invoice_api_url = f"http://localhost:5000/invoices/{sale_id}"
+#             invoice_api_url = f"https://buddiv2-api.onrender.com/invoices/{sale_id}"
 #             response = requests.get(invoice_api_url)
 #
 #             # Check API response
@@ -767,7 +767,7 @@ class ActionRetrieveInvoice(Action):
 
         try:
             # Call the invoice API
-            invoice_api_url = f"http://localhost:5000/invoices/{sale_id}"
+            invoice_api_url = f"https://buddiv2-api.onrender.com/invoices/{sale_id}"
             response = requests.get(invoice_api_url)
 
             # Check API response
