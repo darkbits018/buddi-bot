@@ -29,7 +29,23 @@ intents:
   - get_farmer_sales:
       use_entities:
         - farmer_id
-
+  - download_invoice:
+      use_entities:
+        - sale_id
+  - request_monthly_sales_report
+  - request_yearly_sales_report:
+      use_entities:
+        - year
+  - request_quarterly_sales_report
+  - request_sales_report_for_year:
+      use_entities:
+        - year
+  - request_item_monthly_sales_report
+  - request_item_yearly_sales_report
+  - request_item_sales_for_month
+  - retrieve_invoice
+  - ask_sale_id
+  - provide_sale_id
 
 
 
@@ -44,6 +60,10 @@ entities:
   - buyer_id
   - sale_id
   - farmer_id
+  - sales_period
+  - sales_metric
+  - year
+  - month
 
 
 slots:
@@ -79,6 +99,9 @@ slots:
   sale_id:
     type: text
     influence_conversation: false
+    mappings:
+      - type: from_entity
+        entity: sale_id
   farmer_id:
     type: text
     influence_conversation: false
@@ -94,10 +117,30 @@ slots:
   farmer_total_sales:
     type: float
     influence_conversation: false
-
-
-
-
+  sales_period:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: from_text
+        intent: request_monthly_sales_report
+  sales_metric:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: from_text
+        intent: request_monthly_sales_report
+  year:
+    type: text
+    influence_conversation: true
+  month:
+    type: text
+    influence_conversation: false
+  invoice_content:
+    type: text
+    influence_conversation: false
+  invoice_retrieval_status:
+    type: text
+    influence_conversation: true
 
 responses:
   utter_greet:
@@ -128,6 +171,22 @@ responses:
     - text: "I'll record a sale for item {item_id}, quantity {item_quantity} at {item_price} per unit."
   utter_anything_else:
     - text: "Is there anything else I can help you with?"
+  utter_invoice_not_found:
+    - text: "Sorry, I couldn't find an invoice for the provided sale ID."
+  utter_sales_details:
+    - text: "The sales report shows our monthly performance. We can break down sales by month, track trends, and discuss any specific insights you're interested in."
+
+  utter_monthly_sales_report:
+    - custom:
+        payload:
+          type: "chart"
+          source: "monthly_sales"
+
+  utter_ask_sale_id:
+    - text: "Could you please provide the sale ID for the invoice you want to retrieve?"
+
+  utter_invoice_retrieval_failed:
+    - text: "Sorry, I couldn't retrieve the invoice. Please check the sale ID and try again or contact support."
 
 actions:
   - action_store_item_details
@@ -137,3 +196,15 @@ actions:
   - action_get_sale_details
   - action_get_farmer_sales
   - utter_anything_else
+  - action_download_invoice
+  - utter_invoice_not_found
+  - action_fetch_monthly_sales_report
+  - action_get_yearly_sales_report
+  - action_get_quarterly_sales_report
+  - action_get_sales_report_for_year
+  - action_get_item_monthly_sales_report
+  - action_get_item_yearly_sales_report
+  - action_get_item_sales_for_month
+  - action_retrieve_invoice
+  - utter_ask_sale_id
+  - utter_invoice_retrieval_failed

@@ -1,0 +1,700 @@
+[
+  {
+    "text": "My name is Rahul",
+    "entities": [
+      {
+        "start": 11,
+        "end": 16,
+        "value": "Rahul",
+        "entity": "name"
+      }
+    ],
+    "predicted_entities": []
+  },
+  {
+    "text": "10 Kg",
+    "entities": [
+      {
+        "start": 0,
+        "end": 2,
+        "value": "10",
+        "entity": "item_quantity"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "item_quantity",
+        "start": 0,
+        "end": 2,
+        "confidence_entity": 0.7625696659088135,
+        "value": "10",
+        "extractor": "DIETClassifier"
+      },
+      {
+        "entity": "item_price",
+        "start": 0,
+        "end": 2,
+        "confidence_entity": 0.34025650325668744,
+        "value": "10",
+        "extractor": "CRFEntityExtractor"
+      }
+    ]
+  },
+  {
+    "text": "99.9 INR",
+    "entities": [
+      {
+        "start": 0,
+        "end": 4,
+        "value": "99.9",
+        "entity": "item_price"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "item_price",
+        "start": 0,
+        "end": 4,
+        "confidence_entity": 0.791706383228302,
+        "value": "99.9",
+        "extractor": "DIETClassifier"
+      }
+    ]
+  },
+  {
+    "text": "Invoice for sale number 4",
+    "entities": [
+      {
+        "start": 24,
+        "end": 25,
+        "value": "4",
+        "entity": "sale_id"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "sale_id",
+        "start": 24,
+        "end": 25,
+        "confidence_entity": 0.9937965869903564,
+        "value": "4",
+        "extractor": "DIETClassifier"
+      },
+      {
+        "entity": "buyer_id",
+        "start": 24,
+        "end": 25,
+        "confidence_entity": 0.6348400840538714,
+        "value": "4",
+        "extractor": "CRFEntityExtractor"
+      }
+    ]
+  },
+  {
+    "text": "Mio here",
+    "entities": [
+      {
+        "start": 0,
+        "end": 3,
+        "value": "Mio",
+        "entity": "name"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "item_name",
+        "start": 0,
+        "end": 3,
+        "confidence_entity": 0.4316771626472473,
+        "value": "Mio",
+        "extractor": "DIETClassifier"
+      }
+    ]
+  },
+  {
+    "text": "I want to add banana",
+    "entities": [
+      {
+        "start": 14,
+        "end": 20,
+        "value": "banana",
+        "entity": "item_name"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "item_name",
+        "start": 14,
+        "end": 20,
+        "confidence_entity": 0.976538360118866,
+        "value": "banana",
+        "extractor": "DIETClassifier"
+      }
+    ]
+  },
+  {
+    "text": "Please add onion to the list",
+    "entities": [
+      {
+        "start": 11,
+        "end": 16,
+        "value": "onion",
+        "entity": "item_name"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "item_name",
+        "start": 11,
+        "end": 16,
+        "confidence_entity": 0.9894339442253113,
+        "value": "onion",
+        "extractor": "DIETClassifier"
+      }
+    ]
+  },
+  {
+    "text": "33",
+    "entities": [
+      {
+        "start": 0,
+        "end": 2,
+        "value": "33",
+        "entity": "item_quantity"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "item_quantity",
+        "start": 0,
+        "end": 2,
+        "confidence_entity": 0.6445013284683228,
+        "value": "33",
+        "extractor": "DIETClassifier"
+      },
+      {
+        "entity": "item_name",
+        "start": 0,
+        "end": 2,
+        "confidence_entity": 0.24254304413484862,
+        "value": "33",
+        "extractor": "CRFEntityExtractor"
+      }
+    ]
+  },
+  {
+    "text": "9.99 USD",
+    "entities": [
+      {
+        "start": 0,
+        "end": 4,
+        "value": "9.99",
+        "entity": "item_price"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "item_price",
+        "start": 0,
+        "end": 4,
+        "confidence_entity": 0.6304928064346313,
+        "value": "9.99",
+        "extractor": "DIETClassifier"
+      }
+    ]
+  },
+  {
+    "text": "customer 2",
+    "entities": [
+      {
+        "start": 9,
+        "end": 10,
+        "value": "2",
+        "entity": "buyer_id"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "buyer_id",
+        "start": 9,
+        "end": 10,
+        "confidence_entity": 0.7025906443595886,
+        "value": "2",
+        "extractor": "DIETClassifier"
+      },
+      {
+        "entity": "farmer_id",
+        "start": 9,
+        "end": 10,
+        "confidence_entity": 0.3399284236330221,
+        "value": "2",
+        "extractor": "CRFEntityExtractor"
+      }
+    ]
+  },
+  {
+    "text": "I want to know about sale number 789",
+    "entities": [
+      {
+        "start": 33,
+        "end": 36,
+        "value": "789",
+        "entity": "sale_id"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "sale_id",
+        "start": 33,
+        "end": 36,
+        "confidence_entity": 0.9529476165771484,
+        "value": "789",
+        "extractor": "DIETClassifier"
+      },
+      {
+        "entity": "item_id",
+        "start": 33,
+        "end": 36,
+        "confidence_entity": 0.7675745408886854,
+        "value": "789",
+        "extractor": "CRFEntityExtractor"
+      }
+    ]
+  },
+  {
+    "text": "Quantity is 100",
+    "entities": [
+      {
+        "start": 12,
+        "end": 15,
+        "value": "100",
+        "entity": "item_quantity"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "item_id",
+        "start": 12,
+        "end": 15,
+        "confidence_entity": 0.8561906814575195,
+        "value": "100",
+        "extractor": "DIETClassifier"
+      },
+      {
+        "entity": "item_id",
+        "start": 12,
+        "end": 15,
+        "confidence_entity": 0.4693834621968008,
+        "value": "100",
+        "extractor": "CRFEntityExtractor"
+      }
+    ]
+  },
+  {
+    "text": "8.9 Rs",
+    "entities": [
+      {
+        "start": 0,
+        "end": 3,
+        "value": "8.9",
+        "entity": "item_price"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "item_price",
+        "start": 0,
+        "end": 3,
+        "confidence_entity": 0.7377041578292847,
+        "value": "8.9",
+        "extractor": "DIETClassifier"
+      }
+    ]
+  },
+  {
+    "text": "get details of item number 6",
+    "entities": [
+      {
+        "start": 27,
+        "end": 28,
+        "value": "6",
+        "entity": "item_id"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "item_id",
+        "start": 27,
+        "end": 28,
+        "confidence_entity": 0.9926744103431702,
+        "value": "6",
+        "extractor": "DIETClassifier"
+      },
+      {
+        "entity": "sale_id",
+        "start": 27,
+        "end": 28,
+        "confidence_entity": 0.7108159976860492,
+        "value": "6",
+        "extractor": "CRFEntityExtractor"
+      }
+    ]
+  },
+  {
+    "text": "buyer id is 3",
+    "entities": [
+      {
+        "start": 12,
+        "end": 13,
+        "value": "3",
+        "entity": "buyer_id"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "buyer_id",
+        "start": 12,
+        "end": 13,
+        "confidence_entity": 0.8069040775299072,
+        "value": "3",
+        "extractor": "DIETClassifier"
+      },
+      {
+        "entity": "item_id",
+        "start": 12,
+        "end": 13,
+        "confidence_entity": 0.47873811101889047,
+        "value": "3",
+        "extractor": "CRFEntityExtractor"
+      }
+    ]
+  },
+  {
+    "text": "product 456",
+    "entities": [
+      {
+        "start": 8,
+        "end": 11,
+        "value": "456",
+        "entity": "item_id"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "item_id",
+        "start": 8,
+        "end": 11,
+        "confidence_entity": 0.8406543135643005,
+        "value": "456",
+        "extractor": "DIETClassifier"
+      },
+      {
+        "entity": "sale_id",
+        "start": 8,
+        "end": 11,
+        "confidence_entity": 0.35219268664237113,
+        "value": "456",
+        "extractor": "CRFEntityExtractor"
+      }
+    ]
+  },
+  {
+    "text": "I am Kaze",
+    "entities": [
+      {
+        "start": 5,
+        "end": 9,
+        "value": "Kaze",
+        "entity": "name"
+      }
+    ],
+    "predicted_entities": []
+  },
+  {
+    "text": "corn",
+    "entities": [
+      {
+        "start": 0,
+        "end": 4,
+        "value": "corn",
+        "entity": "item_name"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "item_name",
+        "start": 0,
+        "end": 4,
+        "confidence_entity": 0.8734642267227173,
+        "value": "corn",
+        "extractor": "DIETClassifier"
+      }
+    ]
+  },
+  {
+    "text": "cabbage",
+    "entities": [
+      {
+        "start": 0,
+        "end": 7,
+        "value": "cabbage",
+        "entity": "item_name"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "item_name",
+        "start": 0,
+        "end": 7,
+        "confidence_entity": 0.8734642267227173,
+        "value": "cabbage",
+        "extractor": "DIETClassifier"
+      }
+    ]
+  },
+  {
+    "text": "50 KG",
+    "entities": [
+      {
+        "start": 0,
+        "end": 2,
+        "value": "50",
+        "entity": "item_quantity"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "item_quantity",
+        "start": 0,
+        "end": 2,
+        "confidence_entity": 0.8904855251312256,
+        "value": "50",
+        "extractor": "DIETClassifier"
+      },
+      {
+        "entity": "item_price",
+        "start": 0,
+        "end": 2,
+        "confidence_entity": 0.348425381027835,
+        "value": "50",
+        "extractor": "CRFEntityExtractor"
+      }
+    ]
+  },
+  {
+    "text": "50.40 Dollar",
+    "entities": [
+      {
+        "start": 0,
+        "end": 5,
+        "value": "50.40",
+        "entity": "item_price"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "item_price",
+        "start": 0,
+        "end": 5,
+        "confidence_entity": 0.7398672699928284,
+        "value": "50.40",
+        "extractor": "DIETClassifier"
+      }
+    ]
+  },
+  {
+    "text": "customer number 4",
+    "entities": [
+      {
+        "start": 16,
+        "end": 17,
+        "value": "4",
+        "entity": "buyer_id"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "buyer_id",
+        "start": 16,
+        "end": 17,
+        "confidence_entity": 0.8949114084243774,
+        "value": "4",
+        "extractor": "DIETClassifier"
+      },
+      {
+        "entity": "sale_id",
+        "start": 16,
+        "end": 17,
+        "confidence_entity": 0.8581994873935198,
+        "value": "4",
+        "extractor": "CRFEntityExtractor"
+      }
+    ]
+  },
+  {
+    "text": "product number 567",
+    "entities": [
+      {
+        "start": 15,
+        "end": 18,
+        "value": "567",
+        "entity": "item_id"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "item_id",
+        "start": 15,
+        "end": 18,
+        "confidence_entity": 0.9277348518371582,
+        "value": "567",
+        "extractor": "DIETClassifier"
+      },
+      {
+        "entity": "sale_id",
+        "start": 15,
+        "end": 18,
+        "confidence_entity": 0.6252514860389817,
+        "value": "567",
+        "extractor": "CRFEntityExtractor"
+      }
+    ]
+  },
+  {
+    "text": "Add cucumber",
+    "entities": [
+      {
+        "start": 4,
+        "end": 12,
+        "value": "cucumber",
+        "entity": "item_name"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "item_name",
+        "start": 4,
+        "end": 12,
+        "confidence_entity": 0.45852190256118774,
+        "value": "cucumber",
+        "extractor": "DIETClassifier"
+      }
+    ]
+  },
+  {
+    "text": "Make it 7 units",
+    "entities": [
+      {
+        "start": 8,
+        "end": 9,
+        "value": "7",
+        "entity": "item_quantity"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "buyer_id",
+        "start": 8,
+        "end": 9,
+        "confidence_entity": 0.46884873509407043,
+        "value": "7",
+        "extractor": "DIETClassifier"
+      },
+      {
+        "entity": "item_id",
+        "start": 10,
+        "end": 15,
+        "confidence_entity": 0.4399566650390625,
+        "value": "units",
+        "extractor": "DIETClassifier"
+      },
+      {
+        "entity": "sale_id",
+        "start": 8,
+        "end": 9,
+        "confidence_entity": 0.28727293260694825,
+        "value": "7",
+        "extractor": "CRFEntityExtractor"
+      }
+    ]
+  },
+  {
+    "text": "2.50 Rupees",
+    "entities": [
+      {
+        "start": 0,
+        "end": 4,
+        "value": "2.50",
+        "entity": "item_price"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "item_price",
+        "start": 0,
+        "end": 4,
+        "confidence_entity": 0.7186196446418762,
+        "value": "2.50",
+        "extractor": "DIETClassifier"
+      }
+    ]
+  },
+  {
+    "text": "buyer 1",
+    "entities": [
+      {
+        "start": 6,
+        "end": 7,
+        "value": "1",
+        "entity": "buyer_id"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "buyer_id",
+        "start": 6,
+        "end": 7,
+        "confidence_entity": 0.8958273530006409,
+        "value": "1",
+        "extractor": "DIETClassifier"
+      },
+      {
+        "entity": "sale_id",
+        "start": 6,
+        "end": 7,
+        "confidence_entity": 0.5370740793774099,
+        "value": "1",
+        "extractor": "CRFEntityExtractor"
+      }
+    ]
+  },
+  {
+    "text": "item id is 789",
+    "entities": [
+      {
+        "start": 11,
+        "end": 14,
+        "value": "789",
+        "entity": "item_id"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "item_id",
+        "start": 11,
+        "end": 14,
+        "confidence_entity": 0.9953122138977051,
+        "value": "789",
+        "extractor": "DIETClassifier"
+      },
+      {
+        "entity": "sale_id",
+        "start": 11,
+        "end": 14,
+        "confidence_entity": 0.6960624549883422,
+        "value": "789",
+        "extractor": "CRFEntityExtractor"
+      }
+    ]
+  }
+]

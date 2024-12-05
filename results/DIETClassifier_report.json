@@ -1,50 +1,8 @@
 {
   "buyer_id": {
-    "precision": 1.0,
+    "precision": 0.8333333333333334,
     "recall": 1.0,
-    "f1-score": 1.0,
-    "support": 5,
-    "confused_with": {}
-  },
-  "sale_id": {
-    "precision": 1.0,
-    "recall": 1.0,
-    "f1-score": 1.0,
-    "support": 5,
-    "confused_with": {}
-  },
-  "item_id": {
-    "precision": 1.0,
-    "recall": 1.0,
-    "f1-score": 1.0,
-    "support": 14,
-    "confused_with": {}
-  },
-  "name": {
-    "precision": 1.0,
-    "recall": 1.0,
-    "f1-score": 1.0,
-    "support": 6,
-    "confused_with": {}
-  },
-  "farmer_id": {
-    "precision": 1.0,
-    "recall": 1.0,
-    "f1-score": 1.0,
-    "support": 5,
-    "confused_with": {}
-  },
-  "item_name": {
-    "precision": 1.0,
-    "recall": 1.0,
-    "f1-score": 1.0,
-    "support": 11,
-    "confused_with": {}
-  },
-  "item_quantity": {
-    "precision": 1.0,
-    "recall": 1.0,
-    "f1-score": 1.0,
+    "f1-score": 0.9090909090909091,
     "support": 5,
     "confused_with": {}
   },
@@ -55,23 +13,74 @@
     "support": 5,
     "confused_with": {}
   },
-  "micro avg": {
-    "precision": 1.0,
+  "item_id": {
+    "precision": 0.7777777777777778,
     "recall": 1.0,
-    "f1-score": 1.0,
-    "support": 56
+    "f1-score": 0.8750000000000001,
+    "support": 14,
+    "confused_with": {}
+  },
+  "farmer_id": {
+    "precision": 1.0,
+    "recall": 0.8,
+    "f1-score": 0.888888888888889,
+    "support": 5,
+    "confused_with": {
+      "sale_id": 1
+    }
+  },
+  "name": {
+    "precision": 1.0,
+    "recall": 0.5,
+    "f1-score": 0.6666666666666666,
+    "support": 6,
+    "confused_with": {
+      "item_name": 1
+    }
+  },
+  "item_name": {
+    "precision": 0.9166666666666666,
+    "recall": 1.0,
+    "f1-score": 0.9565217391304348,
+    "support": 11,
+    "confused_with": {}
+  },
+  "sale_id": {
+    "precision": 0.9333333333333333,
+    "recall": 0.9333333333333333,
+    "f1-score": 0.9333333333333333,
+    "support": 15,
+    "confused_with": {
+      "item_id": 1
+    }
+  },
+  "item_quantity": {
+    "precision": 1.0,
+    "recall": 0.6,
+    "f1-score": 0.7499999999999999,
+    "support": 5,
+    "confused_with": {
+      "item_id": 1,
+      "buyer_id": 1
+    }
+  },
+  "micro avg": {
+    "precision": 0.8939393939393939,
+    "recall": 0.8939393939393939,
+    "f1-score": 0.8939393939393939,
+    "support": 66
   },
   "macro avg": {
-    "precision": 1.0,
-    "recall": 1.0,
-    "f1-score": 1.0,
-    "support": 56
+    "precision": 0.9326388888888888,
+    "recall": 0.8541666666666666,
+    "f1-score": 0.8724376921387791,
+    "support": 66
   },
   "weighted avg": {
-    "precision": 1.0,
-    "recall": 1.0,
-    "f1-score": 1.0,
-    "support": 56
+    "precision": 0.9111952861952861,
+    "recall": 0.8939393939393939,
+    "f1-score": 0.8865399715202087,
+    "support": 66
   },
-  "accuracy": 1.0
+  "accuracy": 0.976
 }

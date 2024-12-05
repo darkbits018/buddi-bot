@@ -1,10 +1,98 @@
 [
   {
-    "text": "item 123",
+    "text": "view item 5",
+    "intent": "show_item_details",
+    "intent_prediction": {
+      "name": "inform_item",
+      "confidence": 0.471697598695755
+    }
+  },
+  {
+    "text": "Show me sale 456",
+    "intent": "get_sale_details",
+    "intent_prediction": {
+      "name": "show_item_details",
+      "confidence": 0.39027389883995056
+    }
+  },
+  {
+    "text": "what is item 9",
+    "intent": "show_item_details",
+    "intent_prediction": {
+      "name": "inform_item",
+      "confidence": 0.6539266705513
+    }
+  },
+  {
+    "text": "item 23",
     "intent": "inform_item",
     "intent_prediction": {
       "name": "show_item_details",
-      "confidence": 0.5915346145629883
+      "confidence": 0.8691200017929077
+    }
+  },
+  {
+    "text": "I want to know about sale number 789",
+    "intent": "get_sale_details",
+    "intent_prediction": {
+      "name": "download_invoice",
+      "confidence": 0.3976251482963562
+    }
+  },
+  {
+    "text": "Quantity is 100",
+    "intent": "item_quantity",
+    "intent_prediction": {
+      "name": "show_item_details",
+      "confidence": 0.4412970244884491
+    }
+  },
+  {
+    "text": "Sales report for {year}",
+    "intent": "request_sales_report_for_year",
+    "intent_prediction": {
+      "name": "request_monthly_sales_report",
+      "confidence": 0.4948684871196747
+    }
+  },
+  {
+    "text": "50.40 Dollar",
+    "intent": "item_price",
+    "intent_prediction": {
+      "name": "item_quantity",
+      "confidence": 0.5656179189682007
+    }
+  },
+  {
+    "text": "Can you retrieve sale 234 information?",
+    "intent": "get_sale_details",
+    "intent_prediction": {
+      "name": "download_invoice",
+      "confidence": 0.9373180866241455
+    }
+  },
+  {
+    "text": "Make it 7 units",
+    "intent": "item_quantity",
+    "intent_prediction": {
+      "name": "inform_item",
+      "confidence": 0.5824494957923889
+    }
+  },
+  {
+    "text": "sell an item",
+    "intent": "record_sale",
+    "intent_prediction": {
+      "name": "show_item_details",
+      "confidence": 0.49457189440727234
+    }
+  },
+  {
+    "text": "item id is 789",
+    "intent": "inform_item",
+    "intent_prediction": {
+      "name": "show_item_details",
+      "confidence": 0.758816123008728
     }
   }
 ]

@@ -89,14 +89,14 @@ nlu:
 
   - intent: inform_buyer
     examples: |
-      - buyer [1001]{"entity":"buyer_id", "value":"1001"}
-      - customer [1002]{"entity":"buyer_id", "value":"1002"}
-      - buyer id is [1003]{"entity":"buyer_id", "value":"1003"}
-      - customer number [1004]{"entity":"buyer_id", "value":"1004"}
-      - for buyer [1005]{"entity":"buyer_id", "value":"1005"}
+      - buyer [1]{"entity":"buyer_id", "value":"1"}
+      - customer [2]{"entity":"buyer_id", "value":"2"}
+      - buyer id is [3]{"entity":"buyer_id", "value":"3"}
+      - customer number [4]{"entity":"buyer_id", "value":"4"}
+      - for buyer [5]{"entity":"buyer_id", "value":"5"}
   - intent: inform_item
     examples: |
-      - item [123](item_id)
+      - item [23](item_id)
       - product [456](item_id)
       - item id is [789](item_id)
       - it's item [234](item_id)
@@ -118,6 +118,79 @@ nlu:
       - sales of farmer [3](farmer_id)
       - show me sale for farmer [2](farmer_id)
 
+  - intent: retrieve_invoice
+    examples: |
+      - I want to get my invoice for sale [12](sale_id)
+      - Show me the invoice for order [9](sale_id)
+      - Download invoice [45](sale_id)
+      - Can you retrieve invoice for sale [98](sale_id)
+      - I need the invoice with sale ID [23](sale_id)
+      - Get me the invoice for sale number [56](sale_id)
+      - Fetch invoice for sale [10](sale_id)
+      - Invoice for sale ID [78](sale_id)
+
+  - intent: ask_sale_id
+    examples: |
+      - I want to get my invoice
+      - Can you help me find my invoice?
+      - How do I get an invoice?
+      - I'm looking for an invoice
+      - Help me retrieve an invoice
+
+  - intent: provide_sale_id
+    examples: |
+      - My sale ID is [12](sale_id)
+      - The sale number is [9](sale_id)
+      - Invoice for sale [45](sale_id)
+      - Sale ID [98](sale_id)
+      - [23](sale_id)
+
+  - intent: request_monthly_sales_report
+    examples: |
+      - Show me the monthly sales report
+      - I want to see the sales report for this month
+      - Can I get the sales data for this month?
+      - Generate the sales chart for this month
+      - Fetch the monthly sales data
+      - monthly sales
+      - monthly sales chart
+      - monthly sales report
+
+  - intent: request_yearly_sales_report
+    examples: |
+      - Show me the yearly sales report
+      - I want to see yearly sales data
+      - Yearly sales report, please
+
+  - intent: request_quarterly_sales_report
+    examples: |
+      - Show me the quarterly sales report
+      - I need quarterly sales figures
+      - Quarterly sales report, please
+
+  - intent: request_sales_report_for_year
+    examples: |
+      - Show me the sales report for {year:2023}
+      - I need sales data for {year:2022}
+      - Provide the annual sales for {year:2021}
+      - What were the sales in {year:2020}?
+      - Sales report for {year}
+
+  - intent: request_item_monthly_sales_report
+    examples: |
+      - Show me the item monthly sales report
+      - Monthly item sales report, please
+
+  - intent: request_item_yearly_sales_report
+    examples: |
+      - Show me the yearly item sales report
+      - I want yearly item sales data
+
+  - intent: request_item_sales_for_month
+    examples: |
+      - Show me the sales report for {month:3}/{year:2023}
+      - Item sales for {month:12}/{year:2021}
+
   - lookup: item_name
     examples: |
       - potato
@@ -126,12 +199,27 @@ nlu:
       - banana
       - onion
       - beetroot
+  - lookup: year
+    examples: |
+      - 2020
+      - 2021
+      - 2022
+      - 2023
 
   - regex: item_quantity
     examples: |
       - \b\d+\s?(Kg|KG|units|pcs)?\b
+  - regex: year
+    examples: |
+      - \b(19|20)\d{2}\b  
+
+  - synonym: year
+    examples: |
+      - this year
+      - last year
+
 regex_features:
-    - name: "sale_id_regex"
-      pattern:
-        - "sale\\s+\\d+"
-        - "^\\d+$"
+  - name: "sale_id_regex"
+    pattern:
+      - "sale\\s+\\d+"
+      - "^\\d+$"

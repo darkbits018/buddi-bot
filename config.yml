@@ -7,6 +7,12 @@ pipeline:
   - name: DIETClassifier
     epochs: 100
     constrain_similarities: true
+    entity_recognition: True
+  - name: LexicalSyntacticFeaturizer
+  - name: CRFEntityExtractor
+  - name: DucklingEntityExtractor
+    timezone: "Asia/Taipei"
+
 
 #- name: "EntityExtractor"    # Handles entity extraction
 #- name: "RegexEntityExtractor"    # You can use this for extracting entities based on regex patterns

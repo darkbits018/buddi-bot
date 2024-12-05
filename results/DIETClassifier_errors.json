@@ -1,0 +1,185 @@
+[
+  {
+    "text": "My name is Rahul",
+    "entities": [
+      {
+        "start": 11,
+        "end": 16,
+        "value": "Rahul",
+        "entity": "name"
+      }
+    ],
+    "predicted_entities": []
+  },
+  {
+    "text": "Show me sale 456",
+    "entities": [
+      {
+        "start": 13,
+        "end": 16,
+        "value": "456",
+        "entity": "sale_id"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "item_id",
+        "start": 13,
+        "end": 16,
+        "confidence_entity": 0.5634590983390808,
+        "value": "456",
+        "extractor": "DIETClassifier"
+      },
+      {
+        "entity": "sale_id",
+        "start": 13,
+        "end": 16,
+        "confidence_entity": 0.6533756940343795,
+        "value": "456",
+        "extractor": "CRFEntityExtractor"
+      }
+    ]
+  },
+  {
+    "text": "show me sale for farmer 2",
+    "entities": [
+      {
+        "start": 24,
+        "end": 25,
+        "value": "2",
+        "entity": "farmer_id"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "sale_id",
+        "start": 24,
+        "end": 25,
+        "confidence_entity": 0.595676839351654,
+        "value": "2",
+        "extractor": "DIETClassifier"
+      },
+      {
+        "entity": "farmer_id",
+        "start": 24,
+        "end": 25,
+        "confidence_entity": 0.7777613396136027,
+        "value": "2",
+        "extractor": "CRFEntityExtractor"
+      }
+    ]
+  },
+  {
+    "text": "Mio here",
+    "entities": [
+      {
+        "start": 0,
+        "end": 3,
+        "value": "Mio",
+        "entity": "name"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "item_name",
+        "start": 0,
+        "end": 3,
+        "confidence_entity": 0.4316771626472473,
+        "value": "Mio",
+        "extractor": "DIETClassifier"
+      }
+    ]
+  },
+  {
+    "text": "Quantity is 100",
+    "entities": [
+      {
+        "start": 12,
+        "end": 15,
+        "value": "100",
+        "entity": "item_quantity"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "item_id",
+        "start": 12,
+        "end": 15,
+        "confidence_entity": 0.8561906814575195,
+        "value": "100",
+        "extractor": "DIETClassifier"
+      },
+      {
+        "entity": "item_id",
+        "start": 12,
+        "end": 15,
+        "confidence_entity": 0.4693834621968008,
+        "value": "100",
+        "extractor": "CRFEntityExtractor"
+      }
+    ]
+  },
+  {
+    "text": "I am Kaze",
+    "entities": [
+      {
+        "start": 5,
+        "end": 9,
+        "value": "Kaze",
+        "entity": "name"
+      }
+    ],
+    "predicted_entities": []
+  },
+  {
+    "text": "Make it 7 units",
+    "entities": [
+      {
+        "start": 8,
+        "end": 9,
+        "value": "7",
+        "entity": "item_quantity"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "buyer_id",
+        "start": 8,
+        "end": 9,
+        "confidence_entity": 0.46884873509407043,
+        "value": "7",
+        "extractor": "DIETClassifier"
+      },
+      {
+        "entity": "item_id",
+        "start": 10,
+        "end": 15,
+        "confidence_entity": 0.4399566650390625,
+        "value": "units",
+        "extractor": "DIETClassifier"
+      },
+      {
+        "entity": "sale_id",
+        "start": 8,
+        "end": 9,
+        "confidence_entity": 0.28727293260694825,
+        "value": "7",
+        "extractor": "CRFEntityExtractor"
+      }
+    ]
+  },
+  {
+    "text": "sell an item",
+    "entities": [],
+    "predicted_entities": [
+      {
+        "entity": "item_id",
+        "start": 5,
+        "end": 7,
+        "confidence_entity": 0.6590290665626526,
+        "value": "an",
+        "extractor": "DIETClassifier"
+      }
+    ]
+  }
+]

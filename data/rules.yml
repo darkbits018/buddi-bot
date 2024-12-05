@@ -28,3 +28,9 @@ rules:
   steps:
   - intent: show_item_details
   - action: action_show_item_details
+
+
+- rule: Respond to monthly sales report request
+  steps:
+  - intent: request_monthly_sales_report
+  - action: action_fetch_monthly_sales_report

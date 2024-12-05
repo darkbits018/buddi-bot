@@ -1,11 +1,11 @@
 # actions.py
+import base64
 import re
 from typing import Any, Text, Dict, List
+
 from rasa_sdk import Action, Tracker, logger
-from rasa_sdk.events import SlotSet
+from rasa_sdk.events import SlotSet, EventType
 from rasa_sdk.executor import CollectingDispatcher
-import requests
-import json
 
 
 class ActionStoreItemDetails(Action):
@@ -388,3 +388,424 @@ class ActionGetFarmerSales(Action):
             dispatcher.utter_message(f"Sorry, there was an error retrieving farmer sales: {str(e)}")
 
         return []
+
+
+class ActionDownloadInvoice(Action):
+    def name(self) -> Text:
+        return "action_download_invoice"
+
+    def run(self, dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+
+        # Extract the sale ID from the slot
+        sale_id = tracker.get_slot("sale_id")
+        if not sale_id:
+            dispatcher.utter_message(text="Please provide a valid sale ID.")
+            return []
+
+        # Mock API endpoint (replace with your actual endpoint)
+        api_url = f"https://buddiv2-api.onrender.com/invoices/{sale_id}"
+
+        try:
+            response = requests.get(api_url)
+            if response.status_code == 200:
+                invoice_url = response.json().get("invoice_url")
+                dispatcher.utter_message(text=f"Here is the invoice for sale {sale_id}: {invoice_url}")
+            else:
+                dispatcher.utter_message(text=f"Unable to fetch the invoice for sale {sale_id}. Please try again.")
+        except Exception as e:
+            dispatcher.utter_message(text=f"An error occurred while fetching the invoice: {str(e)}")
+
+        return []
+
+
+# class ActionDownloadInvoice(Action):
+#     def name(self) -> str:
+#         return "action_download_invoice"
+#
+#     def run(self, dispatcher: CollectingDispatcher,
+#             tracker: Tracker,
+#             domain: dict) -> list:
+#
+#         # Extract the sale ID
+#         sale_id = tracker.get_slot("sale_id")
+#         if not sale_id:
+#             dispatcher.utter_message(text="Please provide a valid sale ID.")
+#             return []
+#
+#         # Mock API call (replace with actual endpoint)
+#         api_url = f"https://buddiv2-api.onrender.com/invoice/{sale_id}"
+#         try:
+#             response = requests.get(api_url)
+#             if response.status_code == 200:
+#                 # Assume API response contains the PDF URL
+#                 pdf_url = response.json().get("pdf_url")
+#                 if pdf_url:
+#                     dispatcher.utter_message(text=f"Here is the invoice: [Download PDF]({pdf_url})")
+#                 else:
+#                     dispatcher.utter_message(text="Sorry, no invoice found for the given sale ID.")
+#             else:
+#                 dispatcher.utter_message(text="Failed to fetch the invoice. Please try again later.")
+#         except Exception as e:
+#             dispatcher.utter_message(text=f"An error occurred: {str(e)}")
+#
+#         return []
+
+
+# action_fetch_monthly_sales_report
+# ActionShowSalesReport
+from rasa_sdk import Action
+from rasa_sdk.executor import CollectingDispatcher
+import requests
+
+
+class ActionShowSalesReport(Action):
+    def name(self) -> str:
+        return "action_fetch_monthly_sales_report"
+
+    def run(self, dispatcher: CollectingDispatcher, tracker, domain):
+        try:
+            # Define the API URL
+            api_url = "http://127.0.0.1:5000/api/sales/report/monthly"
+
+            # Call the API endpoint
+            response = requests.get(api_url)
+            response.raise_for_status()  # Raise exception for HTTP errors
+
+            # Parse the response
+            data = response.json()
+            image_url = data.get("image_url")
+
+            if image_url:
+                # Send a message with the embedded image
+                dispatcher.utter_message(text="Here is the monthly sales report:")
+                dispatcher.utter_message(image=image_url)
+            else:
+                dispatcher.utter_message(
+                    text="The sales report could not be generated at the moment. Please try again later.")
+        except requests.exceptions.RequestException as e:
+            dispatcher.utter_message(text=f"Failed to retrieve the sales report: {e}")
+
+        return []
+
+
+class ActionGetYearlySalesReport(Action):
+    def name(self) -> str:
+        return "action_get_yearly_sales_report"
+
+    def run(self, dispatcher: CollectingDispatcher, tracker, domain):
+        api_url = "http://127.0.0.1:5000/api/sales/report/yearly"
+        response = requests.get(api_url)
+        if response.status_code == 200:
+            data = response.json()
+            report_url = data.get("report_url")
+            if report_url:
+                dispatcher.utter_message(
+                    image=report_url,
+                    text="Here is the yearly sales report."
+                )
+            else:
+                dispatcher.utter_message(
+                    text="Could not generate the yearly sales report."
+                )
+        else:
+            dispatcher.utter_message(text="Failed to retrieve the yearly sales report.")
+        return []
+
+
+class ActionGetQuarterlySalesReport(Action):
+    def name(self) -> str:
+        return "action_get_quarterly_sales_report"
+
+    def run(self, dispatcher: CollectingDispatcher, tracker, domain):
+        api_url = "http://127.0.0.1:5000/api/sales/report/quarterly"
+        response = requests.get(api_url)
+        if response.status_code == 200:
+            data = response.json()
+            report_url = data.get("report_url")
+            if report_url:
+                dispatcher.utter_message(
+                    image=report_url,
+                    text="Here is the quarterly sales report."
+                )
+            else:
+                dispatcher.utter_message(
+                    text="Could not generate the quarterly sales report."
+                )
+        else:
+            dispatcher.utter_message(text="Failed to retrieve the quarterly sales report.")
+        return []
+
+
+class ActionGetSalesReportForYear(Action):
+    def name(self) -> str:
+        return "action_get_sales_report_for_year"
+
+    def run(self, dispatcher: CollectingDispatcher, tracker, domain):
+        year = tracker.get_slot("year")
+        if not year:
+            dispatcher.utter_message(text="Please specify a year.")
+            return []
+
+        api_url = f"http://127.0.0.1:5000/api/sales/report/year/{year}"
+        response = requests.get(api_url)
+        if response.status_code == 200:
+            data = response.json()
+            report_url = data.get("report_url")
+            if report_url:
+                dispatcher.utter_message(
+                    image=report_url,
+                    text=f"Here is the sales report for {year}."
+                )
+            else:
+                dispatcher.utter_message(
+                    text=f"Could not generate the sales report for {year}."
+                )
+        else:
+            dispatcher.utter_message(
+                text=f"Failed to retrieve the sales report for {year}."
+            )
+        return []
+
+
+class ActionGetItemMonthlySalesReport(Action):
+    def name(self) -> str:
+        return "action_get_item_monthly_sales_report"
+
+    def run(self, dispatcher: CollectingDispatcher, tracker, domain):
+        api_url = "http://127.0.0.1:5000/api/sales/item-report/monthly"
+        response = requests.get(api_url)
+        if response.status_code == 200:
+            data = response.json()
+            report_url = data.get("report_url")
+            if report_url:
+                dispatcher.utter_message(
+                    image=report_url,
+                    text="Here is the monthly item sales report."
+                )
+            else:
+                dispatcher.utter_message(
+                    text="Could not generate the monthly item sales report."
+                )
+        else:
+            dispatcher.utter_message(
+                text="Failed to retrieve the monthly item sales report."
+            )
+        return []
+
+
+class ActionGetItemYearlySalesReport(Action):
+    def name(self) -> str:
+        return "action_get_item_yearly_sales_report"
+
+    def run(self, dispatcher: CollectingDispatcher, tracker, domain):
+        api_url = "http://127.0.0.1:5000/api/sales/item-report/yearly"
+        response = requests.get(api_url)
+        if response.status_code == 200:
+            data = response.json()
+            report_url = data.get("report_url")
+            if report_url:
+                dispatcher.utter_message(
+                    image=report_url,
+                    text="Here is the yearly item sales report."
+                )
+            else:
+                dispatcher.utter_message(
+                    text="Could not generate the yearly item sales report."
+                )
+        else:
+            dispatcher.utter_message(
+                text="Failed to retrieve the yearly item sales report."
+            )
+        return []
+
+
+class ActionGetItemSalesForMonth(Action):
+    def name(self) -> str:
+        return "action_get_item_sales_for_month"
+
+    def run(self, dispatcher: CollectingDispatcher, tracker, domain):
+        year = tracker.get_slot("year")
+        month = tracker.get_slot("month")
+        if not year or not month:
+            dispatcher.utter_message(text="Please specify both year and month.")
+            return []
+
+        api_url = f"http://127.0.0.1:5000/api/sales/item-report/month/{year}/{month}"
+        response = requests.get(api_url)
+        if response.status_code == 200:
+            data = response.json()
+            report_url = data.get("report_url")
+            if report_url:
+                dispatcher.utter_message(
+                    image=report_url,
+                    text=f"Here is the item sales report for {month}/{year}."
+                )
+            else:
+                dispatcher.utter_message(
+                    text=f"Could not generate the item sales report for {month}/{year}."
+                )
+        else:
+            dispatcher.utter_message(
+                text=f"Failed to retrieve the item sales report for {month}/{year}."
+            )
+        return []
+
+
+# Invoice
+
+# class ActionRetrieveInvoice(Action):
+#     def name(self) -> Text:
+#         return "action_retrieve_invoice"
+#
+#     def run(self, dispatcher: CollectingDispatcher,
+#             tracker: Tracker,
+#             domain: Dict[Text, Any]) -> List[EventType]:
+#
+#         # Extract sale ID from entities or slots
+#         sale_id = None
+#
+#         # First, check entities
+#         latest_entity = tracker.latest_message.get('entities', [])
+#         if latest_entity and len(latest_entity) > 0:
+#             for entity in latest_entity:
+#                 if entity.get('entity') == 'sale_id':
+#                     sale_id = entity.get('value')
+#                     break
+#
+#         # If no entity, check slot
+#         if not sale_id:
+#             sale_id = tracker.get_slot('sale_id')
+#
+#         # Validate sale ID
+#         if not sale_id:
+#             dispatcher.utter_message(
+#                 text="I'm sorry, but I couldn't find a valid sale ID. Could you please provide the sale ID for the invoice?")
+#             return [SlotSet("invoice_retrieval_status", "failed")]
+#
+#         try:
+#             # Call the invoice download API (replace with your actual API endpoint)
+#             invoice_api_url = f"http://localhost:5000/invoices/{sale_id}"
+#             response = requests.get(invoice_api_url)
+#
+#             # Check API response
+#             if response.status_code == 200:
+#                 # Check if the response content is empty
+#                 if not response.content:
+#                     dispatcher.utter_message(text="The invoice data is empty. Please check with the support team.")
+#                     return [SlotSet("invoice_retrieval_status", "failed")]
+#
+#                 # Get the PDF content
+#                 pdf_content = response.content
+#
+#                 # Encode PDF to base64 for inline embedding
+#                 pdf_base64 = base64.b64encode(pdf_content).decode('utf-8')
+#
+#                 # Create an HTML message with embedded PDF
+#                 pdf_html = f'''
+#                     <div style="width: 100%; height: 600px;">
+#                         <object
+#                             data="data:application/pdf;base64,{pdf_base64}"
+#                             type="application/pdf"
+#                             width="100%"
+#                             height="100%"
+#                         >
+#                             <p>Your browser doesn't support PDF display.
+#                             <a href="data:application/pdf;base64,{pdf_base64}" download="invoice_{sale_id}.pdf">
+#                                 Download PDF instead
+#                             </a>
+#                             </p>
+#                         </object>
+#                     </div>
+#                     '''
+#
+#                 # Send the PDF
+#                 dispatcher.utter_message(text=f"Here's the invoice for sale ID {sale_id}:", attachment=pdf_html)
+#
+#                 return [
+#                     SlotSet("sale_id", sale_id),
+#                     SlotSet("invoice_content", pdf_base64),
+#                     SlotSet("invoice_retrieval_status", "success")
+#                 ]
+#
+#             elif response.status_code == 404:
+#                 dispatcher.utter_message(text=f"No invoice found for sale ID {sale_id}.")
+#                 return [SlotSet("invoice_retrieval_status", "not_found")]
+#
+#             else:
+#                 dispatcher.utter_message(text="There was an error downloading the invoice. Please try again later.")
+#                 return [SlotSet("invoice_retrieval_status", "failed")]
+#
+#         except requests.exceptions.RequestException as e:
+#             dispatcher.utter_message(
+#                 text="There was a network error while fetching the invoice. Please try again later.")
+#             print(f"Network error: {str(e)}")
+#             return [SlotSet("invoice_retrieval_status", "network_error")]
+#
+#         except Exception as e:
+#             dispatcher.utter_message(text="An unexpected error occurred while downloading the invoice.")
+#             print(f"Invoice download error: {str(e)}")
+#             return [SlotSet("invoice_retrieval_status", "error")]
+
+class ActionRetrieveInvoice(Action):
+    def name(self) -> Text:
+        return "action_retrieve_invoice"
+
+    def run(self, dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any]) -> List[EventType]:
+
+        # Extract sale ID from entities or slots
+        sale_id = tracker.get_slot('sale_id')
+
+        # Validate sale ID
+        if not sale_id:
+            dispatcher.utter_message(
+                text="I'm sorry, but I couldn't find a valid sale ID. Could you please provide the sale ID for the invoice?")
+            return [SlotSet("invoice_retrieval_status", "failed")]
+
+        try:
+            # Call the invoice API
+            invoice_api_url = f"http://localhost:5000/invoices/{sale_id}"
+            response = requests.get(invoice_api_url)
+
+            # Check API response
+            if response.status_code == 200:
+                # Parse the invoice URL from the response
+                response_data = response.json()
+                invoice_url = response_data.get("invoice_url")
+
+                if not invoice_url:
+                    dispatcher.utter_message(
+                        text="Invoice retrieval was successful, but the URL is missing in the response."
+                    )
+                    return [SlotSet("invoice_retrieval_status", "failed")]
+
+                # Send the invoice URL to the user
+                dispatcher.utter_message(
+                    text=f"Here's the invoice for sale ID {sale_id}: [Download Invoice]({invoice_url})"
+                )
+                return [
+                    SlotSet("sale_id", sale_id),
+                    SlotSet("invoice_retrieval_status", "success"),
+                ]
+
+            elif response.status_code == 404:
+                dispatcher.utter_message(
+                    text=f"No invoice found for sale ID {sale_id}. Please check if the sale ID is correct."
+                )
+                return [SlotSet("invoice_retrieval_status", "not_found")]
+
+            else:
+                dispatcher.utter_message(
+                    text="There was an error retrieving the invoice. Please try again later."
+                )
+                return [SlotSet("invoice_retrieval_status", "failed")]
+
+        except Exception as e:
+            dispatcher.utter_message(
+                text="An unexpected error occurred while retrieving the invoice. Please contact support."
+            )
+            print(f"Invoice retrieval error: {str(e)}")
+            return [SlotSet("invoice_retrieval_status", "error")]
