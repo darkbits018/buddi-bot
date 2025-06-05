@@ -1,4 +1,14 @@
-.env
-.rasa
-.venv
-service-account.json
+# Package manager files
+node_modules
+npm-debug.log
+yarn-error.log
+
+# OSX
+.DS_Store
+
+# Build files
+lib
+module
+
+# Test files
+coverage
